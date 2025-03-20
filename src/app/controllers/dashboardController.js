@@ -1,7 +1,7 @@
 class dashboardController{
 
     DashBoard(req, res){
-        res.render('dashboard', { title: 'Dashboard' });
+        res.render('dashboard', { username: req.user.username });
     }
     
 }

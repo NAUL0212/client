@@ -1,0 +1,74 @@
+{{!-- orders-detail.handlebars --}}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Đơn Hàng</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: white;
+        }
+        .table th, .table td {
+            border-color: #6c757d;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Chi Tiết Đơn Hàng</h1>
+        
+        <div class="card bg-dark text-white p-3 mb-4">
+            <h4>Thông Tin Khách Hàng</h4>
+            <p><strong>Tên:</strong> {{order.customerInfo.[0].name}}</p>
+            <p><strong>Email:</strong> {{order.customerInfo.[0].email}}</p>
+            <p><strong>Địa chỉ:</strong> {{order.customerInfo.[0].address}}</p>
+            <p><strong>Số điện thoại:</strong> {{order.customerInfo.[0].phone}}</p>
+            <p><strong>Phương thức thanh toán:</strong> {{order.customerInfo.[0].paymentMethod}}</p>
+        </div>
+        
+        <h4>Danh Sách Sản Phẩm</h4>
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Kích thước</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each order.cartItems}}
+                <tr>
+                    <td><img src="{{this.image}}" alt="{{this.name}}" width="50"></td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.selectedSize}}</td>
+                    <td>{{this.price}} VNĐ</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{multiply this.price this.quantity}} VNĐ</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        
+        <h4 class="text-right">Tổng thanh toán: {{order.totalAmount}} VNĐ</h4>
+        
+        <a href="/checkout" class="btn btn-primary">Quay Lại Danh Sách</a>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

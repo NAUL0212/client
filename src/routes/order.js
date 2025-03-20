@@ -4,11 +4,12 @@ const router = express.Router();
 
 // p2: khởi tạo controller
 const orderController = require('../app/controllers/OrderController');
+const authenticateToken = require("../middlewares/authMiddleware");
 
 // p3: Object.index
-router.get('/', orderController.GetAllOrder);
-router.post('/', orderController.CreateOrder);
-router.get('/:id', orderController.GetOrderById);
+router.get('/', authenticateToken, orderController.GetAllOrder);       //Điều hướng đến giao diện danh sách đơn hàng
+router.post('/', orderController.CreateOrder);      // Xử lý tạo đơn hàng
+router.get('/:id', authenticateToken, orderController.GetOrderById);   //Điều hướng đến chi tiết đơn hàng
 
 // p4: export
 module.exports = router;

@@ -1,12 +1,8 @@
-// p1: import
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const dashboardController = require("../app/controllers/dashboardController");
+const authenticateToken = require("../middlewares/authMiddleware");
 
-// p2: khởi tạo controller
-const dashboardController = require('../app/controllers/dashboardController');
+router.get("/", authenticateToken, dashboardController.DashBoard);
 
-// p3: Object.index
-router.get('/', dashboardController.DashBoard);
-
-// p4: export
 module.exports = router;

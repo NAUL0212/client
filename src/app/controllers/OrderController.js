@@ -8,15 +8,12 @@ class OrderController{
     // API GET LIST ORDERS
     async GetAllOrder(req, res){
         try{
-                const orders = await Order.find(); // lấy tất cả đơn hàng từ MongoDB
-                res.json({
-                    success: true,
-                    orders: orders
-                });
+                const orders = await Order.find().lean(); // lấy tất cả đơn hàng từ MongoDB
+                res.render('orders', { orders }); // Render file orders.handlebars
             }catch(err){
                 res.status(500).json({
                     success: false,
-                    message: 'Error retrieving orders',
+                    message: 'Lỗi khi lấy danh sách đơn hàng',
                     error: err
                 });
             }
@@ -26,22 +23,27 @@ class OrderController{
         async GetOrderById(req, res){
             try {
                     const {id} = req.params;
+                    console.log(id); // Kiểm tra xem id có đúng không
             
                     // Kiểm tra nếu id là ObjectId hợp lệ
                     if (!mongoose.Types.ObjectId.isValid(id)) {
-                        return res.status(400).json({ message: 'Invalid order ID' });
+                        return res.status(400).json({ message: 'ID đơn hàng không hợp lệ' });
                     }
             
-                    const order = await Order.findById(id);
+                    const order = await Order.findById(id).lean();
             
                     if (!order) {
-                        return res.status(404).json({ message: 'Product not found' });
+                        return res.status(404).json({ message: 'Đơn hàng không tồn tại' });
                     }
             
-                    res.json(order);
+                    res.render('orders-detail', { order });         // hiển thị chi tiết đơn hàng với ID đơn hàng
+                    // res.status(200).json({ 
+                    //     success: true,
+                    //     order 
+                    // });
                 } catch (error) {
                     console.error(error);
-                    res.status(500).json({ message: 'Server error' });
+                    res.status(500).json({ message: 'Lỗi server' });
                 }
         }
 

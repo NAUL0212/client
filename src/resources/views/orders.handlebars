@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Hóa Đơn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #000000; /* Nền đen */
+            color: white; /* Chữ trắng */
+        }
+        .table th, .table td {
+            border-color: #6c757d; /* Màu viền bảng */
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Danh sách Đơn hàng</h1>
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Tên khách hàng</th>
+                    <th>Email</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.customerInfo.[0].name}}</td>
+                    <td>{{this.customerInfo.[0].email}}</td>
+                    <td>{{this.status}}</td>
+                    <td><a href="/checkout/{{this._id}}" class="btn btn-sm btn-info">Xem</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
