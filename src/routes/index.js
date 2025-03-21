@@ -6,6 +6,7 @@ const apiRouter = require('./api')
 const authRouter = require('./auth')
 const registerRouter = require('./register')
 const loginRouter = require('./login')
+const customerRouter = require('./customer')
 
 // p2: func
 function route(app) {
@@ -18,6 +19,7 @@ function route(app) {
     app.use('/dashboard', homeRouter);
     app.use('/register', registerRouter);
     app.use('/login', loginRouter);
+    app.use('/customer', customerRouter)
 }
 
 // p3: export
