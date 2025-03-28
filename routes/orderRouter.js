@@ -11,7 +11,7 @@ const validateToken = require('../middlewares/validateTokenHandler')
 
 // p4: root path
 router.get('/',validateToken, orderController.GetAllOrder);       //Điều hướng đến giao diện danh sách đơn hàng
-router.post('/',validateToken, orderController.CreateOrder);      // Xử lý tạo đơn hàng
+router.post('/', orderController.CreateOrder);      // Xử lý tạo đơn hàng
 router.get('/:id',validateToken, orderController.GetOrderById);   //Điều hướng đến chi tiết đơn hàng
 
 // p5: export

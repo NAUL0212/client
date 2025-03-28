@@ -6,7 +6,7 @@ const router = express.Router();
 const apiController = require('../controllers/APIController');
 
 // p3: khởi tạo validate
-const validateToken = require('../middlewares/validateTokenHandler')
+
 
 
 // p4: root path

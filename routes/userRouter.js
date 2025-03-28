@@ -9,8 +9,8 @@ const userController = require('../controllers/userController');
 const validateToken = require('../middlewares/validateTokenHandler')
 
 // p4: root path
-router.post('/', userController.login);
-router.post('/', userController.register);
+router.post('/login', userController.login);
+router.post('/register', userController.register);
 
 // p5: export
 module.exports = router;

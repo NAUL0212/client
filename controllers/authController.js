@@ -53,18 +53,18 @@ exports.registerUser = asyncHandler(async (req, res) =>{
 exports.login = asyncHandler(async (req, res) =>{
     const {username, password} = req.body;
 
+    // TÀI KHOẢN ADMIN
+    const user = {id: 1, username: "admin", password: "12341234"};
+
     // KIỂM TRA DỮ LIỆU ĐẦU VÀO
-    if(!username || !password){
-        res.status(400);
-        throw new Error("vui lòng nhập đầy đủ dữ liệu");
+    if (username !== "admin" || password !== "12341234") {
+        return res.status(401).json({ message: "Tên đăng nhập hoặc mật khẩu không đúng!" });
     }
 
-    // TÌM USER TRONG MONGODB
-    const user = await User.findOne({username});
+    // // TÌM USER TRONG MONGODB
+    // const user = await User.findOne({username});
 
-    // KIỂM TRA MẬT KHẨU
-    if (user && (await bcrypt.compare(password, user.password))) {
-        // Tạo JWT token
+    // Tạo JWT token
         const token = jwt.sign(
             { id: user.id, username: user.username },
             process.env.JWT_SECRET,
@@ -77,12 +77,9 @@ exports.login = asyncHandler(async (req, res) =>{
             secure: process.env.NODE_ENV === "production",
             maxAge: 3600000 // 1 giờ
         });
-
-        res.redirect("/dashboard");
-    } else {
-        res.status(401);
-        throw new Error("Email hoặc mật khẩu không đúng!");
-    }
+        
+        res.redirect("/dashboard");     // điều hướng đến dashobard
+    
 });
 
 // Đăng xuất người dùng

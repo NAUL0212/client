@@ -19,16 +19,8 @@ const authenticateToken = asyncHandler(async (req, res, next) => {
         // Kiểm tra token hợp lệ hay không
         const user = jwt.verify(token, process.env.JWT_SECRET);
         req.user = user; // Lưu thông tin user vào request
-
-        // Kiểm tra quyền admin nếu là route thêm/sửa/xóa sản phẩm
-        if (["POST", "PUT", "DELETE"].includes(req.method) && user.role !== "admin") {
-            if (req.accepts("html")) {
-                return res.redirect("/auth/login");
-            }
-            return res.status(403).json({ message: "Bạn không có quyền truy cập!" });
-        }
-
         next(); // Tiếp tục nếu hợp lệ
+        
     } catch (err) {
         if (err.name === "TokenExpiredError") {
             if (req.accepts("html")) {
