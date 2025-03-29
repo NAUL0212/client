@@ -16,7 +16,6 @@ router.get('/create', validateToken, productController.GetCreateProduct);      /
 router.post('/create', validateToken, productController.CreateProduct);        // thêm sản phẩm
 
 router.get('/', validateToken, productController.GetAllProduct);               // lấy danh sách sản phẩm
-router.get('/:id', validateToken, productController.GetProductById);           // lấy sản phẩm theo id
 
 
 router.get('/edit/:id', validateToken, productController.GetEditProduct);      // Hiển thị form sửa sản phẩm

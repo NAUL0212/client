@@ -10,24 +10,7 @@ class ProductController {
         res.render('products', { products }); // Render view products.handlebars
     });
 
-    // API GET PRODUCT BY ID
-    GetProductById = asyncHandler(async (req, res) => {
-        const { id } = req.params;
-
-        // Kiểm tra nếu id là ObjectId hợp lệ
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: 'Invalid product ID' });
-        }
-
-        const product = await Products.findById(id);
-
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-
-        res.json(product);
-    });
-
+    
     // API hiển thị form thêm sản phẩm
     GetCreateProduct = asyncHandler(async (req, res) => {
         console.log(req.params); // Kiểm tra request params

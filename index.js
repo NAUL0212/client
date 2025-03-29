@@ -47,7 +47,7 @@ app.set('views', path.join(__dirname, 'resources/views'));
 // chỉ cho phép frontend truy cập từ localhost:8080
 app.use(cors({
     origin: 'http://localhost:8080', // Địa chỉ của frontend
-    methods: 'GET,POST,PUT,DELETE',
+    methods: 'GET,POST',
     allowedHeaders: 'Content-Type, Authorization',
 }));
 

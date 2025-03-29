@@ -34,36 +34,32 @@ exports.login = async (req, res) => {
     try {
       const { username, password } = req.body;
   
-      console.log("📩 Received login request:", { username, password });
+      console.log(" Received login request:", { username, password });
   
       // Kiểm tra user có tồn tại không
       const user = await User.findOne({ username });
       if (!user) {
-        console.log("🚨 User not found!");
+        console.log(" User not found!");
         return res.status(400).json({ message: "Tài khoản không tồn tại!" });
       }
   
       // Kiểm tra mật khẩu
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        console.log("🔑 Incorrect password!");
+        console.log(" Incorrect password!");
         return res.status(400).json({ message: "Mật khẩu không đúng!" });
       }
   
-      // Tạo token JWT
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
   
-      console.log("✅ Login successful!");
+  
+      console.log(" Login successful!");
   
       res.json({
         message: "Đăng nhập thành công!",
-        token,
         user: { id: user._id, username: user.username },
       });
     } catch (error) {
-      console.error("🔥 Server error:", error);
+      console.error(" Server error:", error);
       res.status(500).json({ message: "Lỗi server!" });
     }
   };

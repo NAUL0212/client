@@ -11,49 +11,11 @@ exports.loginPage = (req, res) =>{
 };
 
 
-// ĐĂNG KÝ NGƯỜI DÙNG MỚI
-exports.registerUser = asyncHandler(async (req, res) =>{
-    const {username, password} = req.body;
-
-    // KIỂM TRA DỮ LIỆU ĐẦU VÀO
-    if(!username || !password){
-        res.status(400);
-        throw new Error("Vui lòng nhập đầy đủ thông tin đăng ký");
-    }
-
-    // KIỂM TRA TRÙNG TÊN ĐĂNG KÝ
-    const userExists = await User.findOne({username});
-    if(userExists){
-        res.status(400);
-        throw new Error("Tên đăng ký đã được sử dụng!");
-    }
-
-    // MÃ HÓA MẬT KHẨU
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // TẠO NGƯỜI DÙNG MỚI
-    const user = await User.create({
-        username,
-        password: hashedPassword
-    });
-
-    if(user){
-        res.status(201).json({
-            msg: "Tạo tài khoản thành công!",
-            _id: user.id,
-            email: user.email
-        });
-    }else{
-        res.status(400);
-        throw new Error("Thông tin người dùng không hợp lệ")
-    }
-});
-
-// ĐĂNG NHẬP NGƯỜI DÙNG
+// ĐĂNG NHẬP ADMIN
 exports.login = asyncHandler(async (req, res) =>{
     const {username, password} = req.body;
 
-    // TÀI KHOẢN ADMIN
+    // SET ACCOUNT ADMIN
     const user = {id: 1, username: "admin", password: "12341234"};
 
     // KIỂM TRA DỮ LIỆU ĐẦU VÀO
@@ -61,8 +23,6 @@ exports.login = asyncHandler(async (req, res) =>{
         return res.status(401).json({ message: "Tên đăng nhập hoặc mật khẩu không đúng!" });
     }
 
-    // // TÌM USER TRONG MONGODB
-    // const user = await User.findOne({username});
 
     // Tạo JWT token
         const token = jwt.sign(
